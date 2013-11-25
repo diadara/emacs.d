@@ -1,0 +1,29 @@
+(setq el-get-sources
+      '((:name ruby-mode 
+               :type elpa
+               :load "ruby-mode.el")
+        (:name inf-ruby  :type elpa)
+        (:name ruby-compilation :type elpa)
+
+        (:name css-mode :type elpa)
+        (:name textmate
+               :type git
+               :url "git://github.com/defunkt/textmate.el"
+               :load "textmate.el")
+        (:name rvm
+               :type git
+               :url "http://github.com/djwhitt/rvm.el.git"
+               :load "rvm.el"
+               :compile ("rvm.el")
+               :after (lambda() (rvm-use-default)))
+        (:name rhtml
+               :type git
+               :url "https://github.com/eschulte/rhtml.git"
+               :features rhtml-mode)
+        (:name yaml-mode 
+               :type git
+               :url "http://github.com/yoshiki/yaml-mode.git"
+               :features yaml-mode)))
+(el-get 'sync)
+
+(provide 'elget-sources)

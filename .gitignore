@@ -1,0 +1,14 @@
+el-get
+elpa
+*history*
+session*
+url
+eshell
+*.swp
+\#*
+.\#*
+places
+*~
+.*
+ac-comphist.dat
+
