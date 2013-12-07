@@ -39,6 +39,8 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
+(add-hook 'js-mode-hook 'js2-mode)
+(add-hook 'js-mode-hook 'smartparens-mode)
 
 ;;;###autoload
 (add-to-list 'auto-mode-alist '("\\.json$" . js-mode))

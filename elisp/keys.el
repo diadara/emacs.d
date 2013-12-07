@@ -28,3 +28,20 @@
 (provide 'keys)
 
 
+
+(defun diadara-org-mode-keys ()
+
+  ;; …
+  )
+
+;; add to html-mode-hook
+(add-hook 'org-mode-hook (lambda ()
+                           "Modify keymaps used by `org-mode'."
+                           (local-set-key (kbd "C-c p") 'org-pomodoro)
+                           ))
+
+(global-set-key [f11] 'fullscreen)
+
+(add-hook 'latex-mode-hook (lambda ()
+                             (local-set-key (kbd "C-c C-r") 'redraw-display)
+                             ))

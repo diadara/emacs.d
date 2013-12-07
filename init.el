@@ -1,5 +1,11 @@
-;;; init.el
+;;; init.el -- this is run first
 ;;; Nithin Saji
+
+;;; Commentary:
+
+;;; Organize everything once you get some  time.
+;;;
+
 ;;; Code
 
 ;;; Package Management
@@ -12,24 +18,34 @@
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
 
-(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+;;;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+;;; I don't like el-get anymore
+;;;(unless (require 'el-get nil 'noerror)
+  ;;;(with-current-buffer
+      ;;;(url-retrieve-synchronously
+       ;;;"https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    ;;;(let (el-get-master-branch)
+      ;;;(goto-char (point-max))
+      ;;;(eval-print-last-sexp))))
 
-(unless (require 'el-get nil 'noerror)
-  (with-current-buffer
-      (url-retrieve-synchronously
-       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    (let (el-get-master-branch)
-      (goto-char (point-max))
-      (eval-print-last-sexp))))
-
-(el-get 'sync)
+;;;(el-get 'sync)
 
 
+;;;Custome shit
 
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
+
+
+(setq backup-directory-alist
+      `(("." . ,(expand-file-name
+                 (concat user-emacs-directory "backups")))))
+(setq vc-make-backup-files t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; Appearance
-
+(require 'fill-column-indicator)
+(setq fci-rule-color "#111122")
 
 (setq make-backup-files nil)
 (setq auto-save-default nil)
@@ -61,9 +77,9 @@
 (require 'better-defaults)
 (require 'defuns)
 (require 'keys)
-(require 'elget-sources)
+;;;(require 'elget-sources)
 ;;;;
-
+(require 'smex)
 (setq smex-save-file (expand-file-name ".smex-items" user-emacs-directory))
 (smex-initialize)
 (global-set-key (kbd "M-x") 'smex)
@@ -76,81 +92,105 @@
 (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
  (global-set-key  (kbd "C-`") 'er/expand-region)
 
-;;;(global-auto-complete-mode 1)
-;;;(guru-mode t)
+
+;;; misc
+(require 'auto-complete)
+(global-auto-complete-mode 1)
+(require 'guru-mode)
+(guru-mode t)
+(require 'auto-complete)
+(global-flycheck-mode t)
+(auto-revert-mode t)
+
 ;;; paredit for slime 
 (add-hook 'slime-mode-hook 'paredit-mode)
 (add-hook 'inferior-lisp-mode-hook 'paredit-mode)
 
 ;;; python stuff
+(require 'init-jedi)
 
+;;; lisp stuff
 (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
 (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
 
-(require 'init-jedi)
 (setq inferior-lisp-program "/usr/bin/sbcl")
-
-
-(defun djcb-erc-start-or-switch ()
-  "Connect to ERC, or switch to last active buffer."
-  (interactive)
-  (if (get-buffer "irc.freenode.net:6665") ;; ERC already active?
-
-;;;    (erc-track-switcph-buffer 1) ;; yes: switch to last active
-    (when (y-or-n-p "Start ERC? ") ;; no: maybe start ERC
-      (erc :server "irc.freenode.net" :port 6665 :nick "diadara" :full-name "Nithin Saji" :password "1appu1")
-      )))
-;; full screen
-(defun fullscreen ()
-  (interactive)
-  (set-frame-parameter nil 'fullscreen
-                       (if (frame-parameter nil 'fullscreen) nil 'fullboth)))
-(global-set-key [f11] 'fullscreen)
-
-
-
-
-
-(require 'auto-complete)
-(global-auto-complete-mode t)
-(global-flycheck-mode t)
-
 ;;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (add-to-list 'load-path "~/.emacs.d/themes")
 
-
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(modeline ((t (:background "#183c66" :foreground "#FFFFFF" :height 0.7))) t)
- '(sml-modeline-end-face ((t (:height 0.7))) t))
-
-
-
-;;;Clojure
-(add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
-(setq nrepl-history-file "~/.emacs.d/nrepl-history")
-(setq nrepl-popup-stacktraces t)
-(setq nrepl-popup-stacktraces-in-repl t)
-(add-hook 'nrepl-connected-hook
-          (defun pnh-clojure-mode-eldoc-hook ()
-            (add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
-            (add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
-            (nrepl-enable-on-existing-clojure-buffers)))
-(add-hook 'nrepl-mode-hook 'subword-mode)
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'nrepl-mode))
-(add-hook 'nrepl-mode-hook 'ac-nrepl-setup)
-
 (require 'starter-kit)
 (require 'starter-kit-bindings)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("52588047a0fe3727e3cd8a90e76d7f078c9bd62c0b246324e557dfa5112e0d0c" "7f1263c969f04a8e58f9441f4ba4d7fb1302243355cb9faecb55aec878a06ee9" "636ecbf1091fbc99d95526d7a3a4810d1ccb58997e58bd3184863821303553f3" "690585947abcb3fc7f52e6683b8375f00eef7ea55d028dcf81c9f5accb4dffe5" default))))
+(require 'starter-kit-js)
+(require 'starter-kit-lisp)
+(add-hook 'html-mode-hook 'web-mode)
+(require 'pretty-symbols)
+
+(require 'ido-vertical-mode)
+(ido-vertical-mode t)
+
+;;; guide-key.el
+(require 'guide-key)
+(setq guide-key/guide-key-sequence '("C-x" "C-c" "C-r" "C-t" "C-v"))
+(setq guide-key/text-scale-amount '-1)
+(setq guide-key/recursive-key-sequence-flag t)
+(setq guide-key/popup-window-position 'bottom)
+(guide-key-mode t)
+
+;;
+(require 'wrap-region)
+(wrap-region-mode t)
+
+(require 'setup-dired)
+(require 'setup-markdown-mode)
+(require 'setup-ido)
+(require 'setup-erc)
+(eval-after-load 'org-mode
+      '(define-key org-mode-map (kbd "C-c p") 'org-pomodoro))
+
+(require 'indent-guide)
+;(indent-guide-global-mode)
+(add-hook 'latex-mode-hook (lambda ()
+                             (setq TeX-auto-save t)
+                             (setq TeX-parse-self t)
+                             (setq TeX-save-query nil)
+                             (setq TeX-PDF-mode t)
+                             ))
+(require 'projectile)
+(projectile-global-mode t)
+(set-face-attribute 'default nil
+                    :family "Inconsolata"
+                    :height 100
+                    :weight 'normal
+                    :width 'normal)
+
+(when (functionp 'set-fontset-font)
+  (set-fontset-font "fontset-default"
+                    'unicode
+                    (font-spec :family "DejaVu Sans Mono"
+                               :width 'normal
+                               :size 11.4
+                               :weight 'normal)))
+(when (window-system)
+  (require 'git-gutter-fringe))
+
+(global-git-gutter-mode +1)
+(setq-default indicate-buffer-boundaries 'left)
+(setq-default indicate-empty-lines +1)
+(require 'smart-mode-line)
+(sml/setup)
+  (require 'sublimity)
+  (require 'sublimity-scroll)
+;  (require 'sublimity-map)              
+
+
+;; (setq redisplay-dont-pause t
+;;       scroll-margin 1
+;;       scroll-step 1
+;;       scroll-conservatively 10000
+;;       scroll-preserve-screen-position 1)
+;; (setq mouse-wheel-follow-mouse 't)
+;; (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
+
+(add-hook 'c-mode-hook (lambda ()
+                         (require 'c-eldoc)
+                         (c-turn-on-eldoc-mode)))

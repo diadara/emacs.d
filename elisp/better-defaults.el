@@ -10,7 +10,7 @@
 
 ;; This file is NOT part of GNU Emacs.
 
-
+;;;Code
 ;;;###autoload
 (progn
   

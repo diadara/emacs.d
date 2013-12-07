@@ -42,10 +42,13 @@
 
 ;;;###autoload
 (progn
+(require 'elisp-slime-nav)
   (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
   (add-hook 'emacs-lisp-mode-hook 'esk-remove-elc-on-save)
   (add-hook 'emacs-lisp-mode-hook 'esk-prog-mode-hook)
   (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
+  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook 'pretty-symbols-mode)
 
   (defun esk-remove-elc-on-save ()
     "If you're saving an elisp file, likely the .elc is no longer valid."
