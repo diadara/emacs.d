@@ -159,7 +159,7 @@
 (projectile-global-mode t)
 (set-face-attribute 'default nil
                     :family "Inconsolata"
-                    :height 100
+                    :height 120
                     :weight 'normal
                     :width 'normal)
 
@@ -168,7 +168,7 @@
                     'unicode
                     (font-spec :family "DejaVu Sans Mono"
                                :width 'normal
-                               :size 11.4
+                               :size 13.4
                                :weight 'normal)))
 (when (window-system)
   (require 'git-gutter-fringe))
@@ -194,3 +194,4 @@
 (add-hook 'c-mode-hook (lambda ()
                          (require 'c-eldoc)
                          (c-turn-on-eldoc-mode)))
+(require 'moe-theme-switcher)
