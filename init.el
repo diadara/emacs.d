@@ -1,11 +1,8 @@
 ;;; init.el -- this is run first
 ;;; Nithin Saji
-
 ;;; Commentary:
-
 ;;; Organize everything once you get some  time.
 ;;;
-
 ;;; Code
 
 ;;; Package Management
