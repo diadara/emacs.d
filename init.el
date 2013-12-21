@@ -201,3 +201,8 @@
 
 (setq org-agenda-files '("~/org"))
 (global-set-key (kbd "C-c a") 'org-agenda)
+
+
+
+
+(put 'narrow-to-region 'disabled nil)
