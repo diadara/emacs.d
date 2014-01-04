@@ -39,25 +39,22 @@
 ;; Boston, MA 02110-1301, USA.
 
 ;;; Code:
-(add-hook 'js-mode-hook 'js2-mode)
-(add-hook 'js-mode-hook 'smartparens-mode)
+
+(add-hook 'js2-mode-hook 'smartparens-mode)
 
 ;;;###autoload
-(add-to-list 'auto-mode-alist '("\\.json$" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 ;;;###autoload
-(eval-after-load 'js
+(eval-after-load 'js2
   '(progn (define-key js-mode-map "{" 'paredit-open-curly)
           (define-key js-mode-map "}" 'paredit-close-curly-and-newline)
           (add-hook 'js-mode-hook 'esk-paredit-nonlisp)
           (setq js-indent-level 2)
           ;; fixes problem with pretty function font-lock
-          (define-key js-mode-map (kbd ",") 'self-insert-command)
-          (font-lock-add-keywords
-           'js-mode `(("\\(function *\\)("
-                       (0 (progn (compose-region (match-beginning 1)
-                                                 (match-end 1) "\u0192")
-                                 nil)))))))
+          
+          ))
 
 (provide 'starter-kit-js)
 ;;; starter-kit-js.el ends here

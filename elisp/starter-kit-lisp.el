@@ -48,7 +48,7 @@
   (add-hook 'emacs-lisp-mode-hook 'esk-prog-mode-hook)
   (add-hook 'emacs-lisp-mode-hook 'elisp-slime-nav-mode)
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook 'pretty-symbols-mode)
+
 
   (defun esk-remove-elc-on-save ()
     "If you're saving an elisp file, likely the .elc is no longer valid."
@@ -94,5 +94,24 @@
                                                              "\u0192") nil))))))
   (add-hook 'clojure-mode-hook 'esk-pretty-fn))
 
+(defun sm-lambda-mode-hook ()
+  (font-lock-add-keywords
+   nil `(("\\<lambda\\>"
+   (0 (progn (compose-region (match-beginning 0) (match-end 0)
+        ,(make-char 'greek-iso8859-7 107))
+      nil)))))
+
+  (font-lock-add-keywords
+   nil `(("\\<function\\>"
+   (0 (progn (compose-region (match-beginning 0) (match-end 0)
+        "\u0192")
+      nil)))))
+  )
+
+(add-hook 'emacs-lisp-mode-hook 'sm-lambda-mode-hook)
+(add-hook 'lisp-interactive-mode-hook 'sm-lamba-mode-hook)
+(add-hook 'scheme-mode-hook 'sm-lambda-mode-hook)
+
+(add-hook 'js2-mode-hook 'sm-lambda-mode-hook)
 (provide 'starter-kit-lisp)
 ;;; starter-kit-lisp.el ends here
