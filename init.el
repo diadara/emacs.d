@@ -72,6 +72,7 @@
 ;;; load things
 
 (add-to-list 'load-path "~/.emacs.d/elisp")
+(add-to-list 'load-path "~/.emacs.d/elisp/kde-emacs/")
 (require 'better-defaults)
 (require 'defuns)
 (require 'keys)
@@ -118,10 +119,9 @@
 
 (require 'starter-kit)
 (require 'starter-kit-bindings)
-(require 'starter-kit-js)
 (require 'starter-kit-lisp)
 (add-hook 'html-mode-hook 'web-mode)
-(require 'pretty-symbols)
+
 
 (require 'ido-vertical-mode)
 (ido-vertical-mode t)
@@ -152,8 +152,8 @@
                              (setq TeX-parse-self t)
                              (setq TeX-save-query nil)
                              (setq TeX-PDF-mode t)
-                             ))
-(require 'projectile)
+                             )
+          (require 'projectile))
 (projectile-global-mode t)
 (set-face-attribute 'default nil
                     :family "Inconsolata"
@@ -216,6 +216,9 @@
          "* %?\nEntered on %U\n  %i\n  %a")
         ("l" "Link" plain (file (concat org-directory "/links.org"))
          "- %?\n %x\n")))
+
+
+(global-set-key (kbd "C-c C-v") 'evil-mode)
 (setq frame-title-format
       '( multiple-frames "%b"
                          ("" invocation-name "--" server-name)))
