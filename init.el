@@ -201,5 +201,18 @@
 
 
 
+(setq org-agenda-files '("~/org"))
+(setq org-directory "~/")
+(global-set-key (kbd "C-c a") 'org-agenda)
+(setq org-log-done 'time)
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(global-set-key (kbd "C-c c") 'org-capture)
 
 (put 'narrow-to-region 'disabled nil)
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline (concat org-directory "/gtd.org") "Tasks")
+         "* TODO %?\n %i\n")
+        ("j" "Journal" entry (file+datetree "~/org/journal.org")
+         "* %?\nEntered on %U\n  %i\n  %a")
+        ("l" "Link" plain (file (concat org-directory "/links.org"))
+         "- %?\n %x\n")))
