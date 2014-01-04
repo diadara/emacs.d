@@ -192,13 +192,12 @@
 (add-hook 'c-mode-hook (lambda ()
                          (require 'c-eldoc)
                          (c-turn-on-eldoc-mode)))
-(defun diadara/edit-init () (interactive)
+(defun my/edit-init () (interactive)
   (find-file "/home/diadara/.emacs.d/init.el"))
-(global-set-key (kbd "C-c i") 'diadara/edit-init)
-(require 'moe-theme-switcher)
-
-(setq org-agenda-files '("~/org"))
-(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c i") 'my/edit-init)
+;(require 'moe-theme-switcher)
+(load-theme 'afternoon)
+;;;(load-theme 'moe-light)
 
 
 
