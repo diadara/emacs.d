@@ -16,3 +16,6 @@ ac-comphist.dat
 /request/curl-cookie-jar
 /srecode-map.el
 /emms/cache
+/bookmarks
+/server
+/tramp
