@@ -6,6 +6,7 @@
 ;;; Code
 
 ;;; Package Management
+(setq server-use-tcp t)
 (require 'server)
 (unless (server-running-p) (server-start))
 (require 'package)
@@ -216,3 +217,9 @@
          "* %?\nEntered on %U\n  %i\n  %a")
         ("l" "Link" plain (file (concat org-directory "/links.org"))
          "- %?\n %x\n")))
+(setq frame-title-format
+      '( multiple-frames "%b"
+                         ("" invocation-name "--" server-name)))
+(add-hook 'create-frame-hook (lambda (frame) 
+                             (while (string= "irc" server-name)
+                               (erc-start-or-switch))))

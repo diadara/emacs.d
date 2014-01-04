@@ -41,6 +41,7 @@
                            ))
 
 (global-set-key [f11] 'fullscreen)
+(global-set-key (kbd "C-c M-f") 'find-file-at-point)
 
 (add-hook 'latex-mode-hook (lambda ()
                              (local-set-key (kbd "C-c C-r") 'redraw-display)
