@@ -6,7 +6,7 @@
 (setq
  ;; python-shell-extra-pythonpaths
  ;; "/home/diadara/projects/linkaggrigator/"
- python-shell-interpreter "ipython2"
+ python-shell-interpreter "ipython"
  python-shell-interpreter-args ""
  python-shell-prompt-regexp "In \\[[0-9]+\\]: "
  python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
@@ -17,7 +17,7 @@
  python-shell-completion-string-code
    "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"
  python-shell-virtualenv-path
- "/home/diadara/.virtualenvs/python2/")
+ "/home/bidgely/.virtualenvs/hoard/")
 
 (defun setup-python()
   (interactive)
@@ -30,12 +30,12 @@
   (setq jedi:setup-keys t)
   (require 'jedi)
   (setq jedi:server-command
-        (list "/usr/bin/python2" jedi:server-script))
+        (list "/usr/bin/python" jedi:server-script))
   (setq jedi:server-args
         '(
                                         ;"--virtual-env" "/home/diadara/.virtualenvs/django"
                                         ;"--virtual-env" "/home/diadara/.virtualenvs/notesapp"
-          "--virtual-env" "/home/diadara/.virtualenvs/python2"
+          "--virtual-env" "/home/bidgely/.virtualenvs/hoard/"
 
           ))
 

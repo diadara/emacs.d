@@ -15,17 +15,6 @@
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 (package-initialize)
-
-;;;(add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-;;; I don't like el-get anymore
-;;;(unless (require 'el-get nil 'noerror)
-  ;;;(with-current-buffer
-      ;;;(url-retrieve-synchronously
-       ;;;"https://raw.github.com/dimitri/el-get/master/el-get-install.el")
-    ;;;(let (el-get-master-branch)
-      ;;;(goto-char (point-max))
-      ;;;(eval-print-last-sexp))))
-
 ;;;(el-get 'sync)
 
 
@@ -62,7 +51,7 @@
 (column-number-mode t)
 (set-fringe-style -1)
 (tooltip-mode -1)
-(menu-bar-mode -1)
+(menu-bar-mode 1)
 (transient-mark-mode t)
 (setq windmove-wrap-around t)
 (global-hl-line-mode)
@@ -93,33 +82,27 @@
 
 
 ;;; misc
-(require 'auto-complete)
-(global-auto-complete-mode 1)
 (require 'guru-mode)
+(require 'projectile)
+(projectile-global-mode t)
 (guru-mode t)
-(require 'auto-complete)
+
 (global-flycheck-mode t)
 (auto-revert-mode t)
 
-;;; paredit for slime 
-(add-hook 'slime-mode-hook 'paredit-mode)
-(add-hook 'inferior-lisp-mode-hook 'paredit-mode)
-
-;;; python stuff
-(require 'init-jedi)
 
 ;;; lisp stuff
 (add-hook 'lisp-mode-hook (lambda () (slime-mode t)))
 (add-hook 'inferior-lisp-mode-hook (lambda () (inferior-slime-mode t)))
 
-(setq inferior-lisp-program "/usr/bin/sbcl")
+
 ;;; theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (add-to-list 'load-path "~/.emacs.d/themes")
 
 (require 'starter-kit)
 (require 'starter-kit-bindings)
-(require 'starter-kit-lisp)
+;(require 'starter-kit-lisp)
 (add-hook 'html-mode-hook 'web-mode)
 
 
@@ -141,33 +124,8 @@
 (require 'setup-dired)
 (require 'setup-markdown-mode)
 (require 'setup-ido)
-(require 'setup-erc)
-(eval-after-load 'org-mode
-      '(define-key org-mode-map (kbd "C-c p") 'org-pomodoro))
 
-(require 'indent-guide)
-;(indent-guide-global-mode)
-(add-hook 'latex-mode-hook (lambda ()
-                             (setq TeX-auto-save t)
-                             (setq TeX-parse-self t)
-                             (setq TeX-save-query nil)
-                             (setq TeX-PDF-mode t)
-                             )
-          (require 'projectile))
-(projectile-global-mode t)
-(set-face-attribute 'default nil
-                    :family "Inconsolata"
-                    :height 120
-                    :weight 'normal
-                    :width 'normal)
 
-(when (functionp 'set-fontset-font)
-  (set-fontset-font "fontset-default"
-                    'unicode
-                    (font-spec :family "DejaVu Sans Mono"
-                               :width 'normal
-                               :size 13.4
-                               :weight 'normal)))
 (when (window-system)
   (require 'git-gutter-fringe))
 
@@ -175,53 +133,19 @@
 (setq-default indicate-buffer-boundaries 'left)
 (setq-default indicate-empty-lines +1)
 (require 'smart-mode-line)
-(sml/setup)
-  (require 'sublimity)
-  (require 'sublimity-scroll)
-;  (require 'sublimity-map)              
 
-
-;; (setq redisplay-dont-pause t
-;;       scroll-margin 1
-;;       scroll-step 1
-;;       scroll-conservatively 10000
-;;       scroll-preserve-screen-position 1)
-;; (setq mouse-wheel-follow-mouse 't)
-;; (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 
 (add-hook 'c-mode-hook (lambda ()
                          (require 'c-eldoc)
                          (c-turn-on-eldoc-mode)))
-(defun my/edit-init () (interactive)
-  (find-file "/home/diadara/.emacs.d/init.el"))
-(global-set-key (kbd "C-c i") 'my/edit-init)
+
 ;(require 'moe-theme-switcher)
-(load-theme 'afternoon)
+;;(load-theme 'afternoon)
+(load-theme 'misterioso)
 ;;;(load-theme 'moe-light)
+(require 'init-jedi)
 
 
-
-(setq org-agenda-files '("~/org"))
-(setq org-directory "~/")
-(global-set-key (kbd "C-c a") 'org-agenda)
-(setq org-log-done 'time)
-(setq org-default-notes-file (concat org-directory "/notes.org"))
-(global-set-key (kbd "C-c c") 'org-capture)
 
 (put 'narrow-to-region 'disabled nil)
-(setq org-capture-templates
-      '(("t" "Todo" entry (file+headline (concat org-directory "/gtd.org") "Tasks")
-         "* TODO %?\n %i\n")
-        ("j" "Journal" entry (file+datetree "~/org/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")
-        ("l" "Link" plain (file (concat org-directory "/links.org"))
-         "- %?\n %x\n")))
-
-
-(global-set-key (kbd "C-c C-v") 'evil-mode)
-(setq frame-title-format
-      '( multiple-frames "%b"
-                         ("" invocation-name "--" server-name)))
-(add-hook 'create-frame-hook (lambda (frame) 
-                             (while (string= "irc" server-name)
-                               (erc-start-or-switch))))
+(require 'indent-guide)
