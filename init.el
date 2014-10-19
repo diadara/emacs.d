@@ -51,7 +51,7 @@
 (column-number-mode t)
 (set-fringe-style -1)
 (tooltip-mode -1)
-(menu-bar-mode 1)
+(menu-bar-mode -1)
 (transient-mark-mode t)
 (setq windmove-wrap-around t)
 (global-hl-line-mode)
